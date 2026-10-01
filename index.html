@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>keandje.flowers</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #fff8fb;
+            color: #45354a;
+        }
+
+      .how-order {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.order-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: white;
+    padding: 16px;
+    border-radius: 18px;
+    box-shadow: 0 4px 15px rgba(100, 70, 110, 0.08);
+}
+
+.order-number {
+    min-width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #eadcf5;
+    color: #6f4b8b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.order-step strong {
+    color: #6f4b8b;
+}
+
+.order-step p {
+    margin: 5px 0 0;
+    font-size: 13px;
+    color: #8a718f;
+    line-height: 1.5;
+}
+
+        /* SEARCH BOX */
+        .search-box {
+            margin: 20px 0;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #eadcf5;
+            border-radius: 18px;
+            outline: none;
+            font-size: 14px;
+            background: #fffaff;
+        }
+
+        .search-box input:focus {
+            border-color: #c9a9df;
+        }
+  
+        /* NAVBAR */
+        .navbar {
+            display: flex;  
+        justify-content: space-between;  
+        align-items: center;  
+        padding: 18px 20px;  
+        background: white;  
+        position: sticky;  
+        top: 0;  
+        z-index: 20;  
+        box-shadow: 0 2px 12px rgba(120, 80, 130, 0.08);  
+    }  
+
+        .logo {
+            font-size: 21px;
+            font-weight: bold;
+            color: #7d5aa6;
+        }
+
+        .cart {
+            position: relative;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -7px;
+            right: -9px;
+            background: #9b78c3;
+            color: white;
+            font-size: 10px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* HERO */
+        .hero {
+            margin: 18px;
+            padding: 45px 24px;
+            border-radius: 28px;
+            text-align: center;
+            background: linear-gradient(
+                145deg,
+                #eadcf5,
+                #ffe2ed 65%,
+                #dcecf7
+            );
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "✦";
+            position: absolute;
+            top: 20px;
+            left: 25px;
+            font-size: 25px;
+            color: #a9cce3;
+        }
+
+        .hero::after {
+            content: "♡";
+            position: absolute;
+            bottom: 18px;
+            right: 25px;
+            font-size: 30px;
+            color: white;
+        }
+
+        .hero h1 {
+            font-family: Georgia, serif;
+            font-size: 38px;
+            line-height: 1.1;
+            color: #5b4568;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #715d77;
+            margin-bottom: 25px;
+        }
+
+        .button {
+            display: inline-block;
+            background: #9b78c3;
+            color: white;
+            padding: 13px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 15px;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* SECTION */
+        .section {
+            padding: 28px 18px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-family: Georgia, serif;
+            font-size: 25px;
+            color: #5b4568;
+            margin-bottom: 20px;
+        }
+      .cart-item small {
+            color: #8a718f;
+      }
+      
+      
+        /* CATEGORY */
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .category {
+            background: white;
+            padding: 20px 10px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(100, 70, 110, 0.08);
+            font-size: 14px;
+        }
+
+        .category.active {
+            background: #eadcf5;
+            color: #6f4b8b;
+            box-shadow: 0 4px 15px rgba(100, 70, 110, 0.15);
+        }
+      
+        .category-icon {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        /* PRODUCTS */
+        .products {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+        }
+
+        .product {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(100, 70, 110, 0.08);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .product:active {
+            transform: scale(0.97);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: 16px;
+}
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            pointer-events: none;
+        }
+
+        .product-info {
+            padding: 13px;
+        }
+
+        .product-name {
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+
+        .price {
+            color: #8b67ad;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        /* ABOUT */
+        .about {
+            background: #eadcf5;
+            border-radius: 25px;
+            padding: 25px 20px;
+            text-align: center;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        /* FOOTER */
+        footer {
+            margin-top: 20px;
+            padding: 30px 20px;
+            text-align: center;
+            background: #5b4568;
+            color: white;
+            font-size: 13px;
+        }
+
+        footer strong {
+            font-size: 18px;
+        }
+
+        /* MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(60, 40, 65, 0.45);
+            z-index: 50;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-box {
+            background: white;
+            width: 100%;
+            max-width: 500px;
+            border-radius: 28px 28px 0 0;
+            padding: 25px;
+            animation: naik 0.25s ease;
+        }
+
+        @keyframes naik {
+            from {
+                transform: translateY(100%);
+            }
+
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        .close {
+            text-align: right;
+            font-size: 25px;
+            cursor: pointer;
+        }
+
+        .detail-image {
+            height: 190px;
+            border-radius: 22px;
+            background: linear-gradient(
+                145deg,
+                #eadcf5,
+                #ffe2ed,
+                #dcecf7
+            );
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            margin: 5px 0 20px;
+        }
+          .detail-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 16px;
+          }
+        
+
+        .detail-name {
+            font-family: Georgia, serif;
+            font-size: 27px;
+            color: #5b4568;
+            margin-bottom: 7px;
+        }
+
+        .detail-price {
+            color: #8b67ad;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .detail-desc {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #715d77;
+            margin-bottom: 18px;
+        }
+
+        .quantity {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 18px;
+        }
+
+        .quantity button {
+            border: none;
+            background: #eadcf5;
+            color: #5b4568;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            font-size: 18px;
+        }
+
+        .quantity span {
+            font-weight: bold;
+        }
+
+        .add-cart {
+            width: 100%;
+            border: none;
+            background: #9b78c3;
+            color: white;
+            padding: 15px;
+            border-radius: 30px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+ 
+        /* CART */
+        .cart-box {
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 13px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-total {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 18px;
+            display: flex;
+            justify-content: space-between;
+        }
+      .cart-item button {
+          border: none;
+          background: #eadcf5;
+          color: #6f4b8b;
+          width: 32px;
+          height: 32px;
+          border-radius: 10px;
+          font-size: 18px;
+          font-weight: bold;
+          margin: 0 3px;
+          cursor: pointer;
+        }
+        
+      .cart-item button:hover {
+          background: #dcc6e7;
+        }
+        
+      .cart-item button:last-child {
+          background: #ffe2ed;
+        }
+        
+      .cart-item small {
+          color: #8a718f;
+        }
+          .about-contact {
+    margin-top: 25px;
+    padding: 20px;
+    background: #fffaff;
+    border-radius: 20px;
+    text-align: center;
+}
+
+.about-contact h3 {
+    color: #6f4b8b;
+    margin-bottom: 8px;
+}
+
+.about-contact p {
+    color: #8a718f;
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}  
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="logo">keandje.flowers</div>
+
+        <div class="cart" onclick="openCart()">
+            🛒
+            <span class="cart-count" id="cartCount">0</span>
+        </div>
+    </nav>
+
+
+    <!-- HERO -->
+    <section class="hero">
+
+        <h1>
+            Sweet craft<br>
+            for your gift ✨
+        </h1>
+
+        <p>
+            Handmade flowers & gifts
+            made with love by two friends.
+        </p>
+
+        <a href="#products" class="button">
+            Belanja Sekarang
+        </a>
+
+    </section>
+
+
+    <!-- CATEGORY -->
+    <section class="section">
+      
+<div class="category" onclick="showAllProducts()">
+    <div class="category-icon">✨</div>
+    Semua
+</div>
+        <div class="category" onclick="filterCategory('Flowers')">
+    <div class="category-icon">🌷</div>
+    Flowers
+</div>
+
+<div class="category" onclick="filterCategory('Bucket')">
+    <div class="category-icon">💐</div>
+    Bucket
+</div>
+
+<div class="category" onclick="filterCategory('Gift')">
+    <div class="category-icon">🎁</div>
+    Gift
+</div>
+
+<div class="category" onclick="filterCategory('Accessories')">
+    <div class="category-icon">🎀</div>
+    Accessories
+</div>
+    </section>
+
+
+    <!-- PRODUCTS -->
+ <!-- CATALOG -->
+<section class="section" id="products">
+
+    <h2 class="section-title">
+        Our Catalog ♡
+    </h2>
+
+    <div class="search-box">
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Cari produk... 🌷"
+            oninput="searchProducts()"
+        
+       
+
+    </div>
+</section>
+  
+   <section class="section" id="products">
+
+        <h2 class="section-title">
+            Our Products ♡
+        </h2>
+
+        <div class="products">
+  
+            <div class="product"data-category="Gift"onclick="openProduct('Tulip Pink', 'Rp15.000', './images/IMG_20260724_153134.jpg', 'Tulip handmade dari pipe cleaner dengan warna pink yang manis.')">
+
+                <div class="product-image">
+    <img src="./images/IMG_20260724_153134.jpg" alt="Tulip Pink">
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Tulip Pink</div>
+                    <div class="price">Rp15.000</div>
+                </div>
+
+            </div>
+
+
+            <div class="product"data-category="Gift" onclick="openProduct('Daisy Mini', 'Rp15.000', './images/IMG_20260724_153024.jpg', 'Daisy mini handmade yang cocok untuk hadiah kecil dan manis.')">
+
+                <div class="product-image">
+        <img src="./images/IMG_20260724_153024.jpg" alt="Daisy Mini">
+                </div>
+              
+                <div class="product-info">
+                    <div class="product-name">Daisy Mini</div>
+                    <div class="price">Rp15.000</div>
+                </div>
+
+            </div>
+
+
+            <div class="product"data-category="Gift"onclick="openProduct('Sunflower', 'Rp18.000', '🌻', 'Sunflower handmade dengan nuansa cerah untuk menemani hari spesial.')">
+
+                <div class="product-image">🌻</div>
+
+                <div class="product-info">
+                    <div class="product-name">Sunflower</div>
+                    <div class="price">Rp18.000</div>
+                </div>
+
+            </div>
+
+
+            <div class="product"data-category="Gift"onclick="openProduct('Custom Gift', 'Mulai Rp20.000', '💜', 'Custom gift yang dapat disesuaikan dengan kebutuhan dan keinginan kamu.')">
+
+                <div class="product-image">💜</div>
+
+                <div class="product-info">
+                    <div class="product-name">Custom Gift</div>
+                    <div class="price">Mulai Rp20.000</div>
+                </div>
+
+            </div>
+
+        </div>
+<div id="emptyCategory" style="display:none; text-align:center; padding:30px 15px; color:#8a718f;">
+    <div style="font-size:35px; margin-bottom:10px;">🌷</div>
+    <strong>Belum ada produk di kategori ini ♡</strong>
+    <p style="margin-top:8px;">Tunggu koleksi barunya yaa ✨</p>
+</div>
+     
+    </section>
+
+<!-- HOW TO ORDER -->
+<section class="section" id="how-to-order">
+
+    <h2 class="section-title">
+        How to Order ♡
+    </h2>
+
+    <div class="how-order">
+
+        <div class="order-step">
+            <div class="order-number">1</div>
+            <div>
+                <strong>Pilih produk</strong>
+                <p>Pilih produk yang kamu suka dari katalog kami.</p>
+            </div>
+        </div>
+
+        <div class="order-step">
+            <div class="order-number">2</div>
+            <div>
+                <strong>Masukkan ke keranjang</strong>
+                <p>Atur jumlah dan pilih warna jika tersedia.</p>
+            </div>
+        </div>
+
+        <div class="order-step">
+            <div class="order-number">3</div>
+            <div>
+                <strong>Checkout via WhatsApp</strong>
+                <p>Klik tombol pesan dan pilih admin yang ingin dihubungi.</p>
+            </div>
+        </div>
+
+        <div class="order-step">
+            <div class="order-number">4</div>
+            <div>
+                <strong>Konfirmasi pesanan</strong>
+                <p>Admin akan membantu proses pesanan sampai selesai.</p>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+  
+    <!-- ABOUT -->
+    <section class="section">
+
+        <div class="about">
+
+            <h2>Made With Love ♡</h2>
+
+            <br>
+
+            <p>
+                keandje.flowers adalah handmade craft
+                yang dibuat oleh dua teman untuk menghadirkan
+                bunga dan gift kecil yang manis untuk
+                orang-orang spesial.
+            </p>
+
+        </div>
+      
+<div class="about-contact">
+    <h3>Need help? 💬</h3>
+    <p>
+        Punya pertanyaan atau mau custom gift?
+        Yuk, ngobrol langsung dengan admin kami ♡
+    </p>
+
+    <button class="add-cart" onclick="openAdminChat()">
+    Chat via WhatsApp 💬
+    </button>
+  
+</div>
+      
+    </section>
+
+
+    <!-- FOOTER -->
+    <footer>
+
+        <strong>keandje.flowers</strong>
+
+        <br><br>
+
+        Sweet craft for your gift ✨
+
+        <br><br>
+
+        © 2026 keandje.flowers
+
+    </footer>
+
+
+    <!-- PRODUCT DETAIL -->
+    <div class="modal" id="productModal">
+
+        <div class="modal-box">
+
+            <div class="close" onclick="closeProduct()">×</div>
+
+          <div class="detail-image" id="detailImage">
+    <img src="./images/IMG_20260724_153134.jpg" alt="Tulip Pink">
+          </div>
+
+            <h2 class="detail-name" id="detailName">
+                Tulip Pink
+            </h2>
+
+            <div class="detail-price" id="detailPrice">
+                Rp15.000
+            </div>
+
+            <p class="detail-desc" id="detailDesc">
+                Deskripsi produk.
+            </p>
+
+          <div id="daisyColors" style="display:none; margin:15px 0;">
+    <p style="margin-bottom:8px; font-weight:bold;">Pilih warna:</p>
+
+    <button onclick="changeDaisyColor('red')">
+        ❤️ Merah
+    </button>
+
+    <button onclick="changeDaisyColor('yellow')">
+        💛 Kuning
+    </button>
+          </div>
+
+            <div class="quantity">
+
+                <button onclick="kurang()">−</button>
+
+                <span id="quantity">1</span>
+
+                <button onclick="tambah()">+</button>
+
+            </div>
+
+            <button class="add-cart" onclick="addToCart()">
+                Tambah ke Keranjang 🛒
+            </button>
+
+        </div>
+
+    </div>
+
+     <!-- ADMIN WHATSAPP -->
+<div class="modal" id="adminModal">
+
+    <div class="modal-box">
+
+        <div class="close" onclick="closeAdminModal()">×</div>
+
+        <h2 class="detail-name">
+            Pilih Admin 💬
+        </h2>
+
+        <p class="detail-desc">
+            Mau melakukan pemesanan melalui admin yang mana?
+        </p>
+
+        <button
+            class="add-cart"
+            onclick="sendToWhatsApp('6281316167102')">
+            🩷 Admin 1
+        </button>
+
+        <br><br>
+
+        <button
+            class="add-cart"
+            onclick="sendToWhatsApp('6285883016867')">
+            💙 Admin 2
+        </button>
+
+    </div>
+
+</div>
+  
+    <!-- CART -->
+    <div class="modal" id="cartModal">
+
+        <div class="modal-box cart-box">
+
+            <div class="close" onclick="closeCart()">×</div>
+
+            <h2 class="detail-name">
+                Keranjang 🛒
+            </h2>
+
+            <div id="cartItems">
+                <p>Keranjang masih kosong ♡</p>
+            </div>
+
+            <div class="cart-total">
+
+                <span>Total</span>
+
+                <span id="cartTotal">
+                    Rp0
+                </span>
+
+              <button class="add-cart" onclick="checkoutWhatsApp()">
+    Pesan via WhatsApp 💬
+              </button>
+              
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        let selectedProduct = "";
+        let selectedPrice = 0;
+        let quantity = 1;
+        let selectedColor = "";
+        let cart = [];
+        let selectedCategory = "";
+      
+      function openProduct(name, price, image, desc) {
+
+    selectedProduct = name;
+    selectedPrice = parseInt(
+        price.replace(/\D/g, "")
+    );
+
+    quantity = 1;
+    selectedColor = "";
+        
+    document.getElementById("detailName").innerText = name;
+    document.getElementById("detailPrice").innerText = price;
+document.getElementById("detailImage").innerHTML = 
+  '<img src="' + image + '" alt="' + name + '">';
+    document.getElementById("detailDesc").innerText = desc;if (name === "Daisy Mini") {
+    document.getElementById("daisyColors").style.display = "block";
+} else {
+    document.getElementById("daisyColors").style.display = "none";
+    }
+    document.getElementById("quantity").innerText = quantity;
+
+    document
+        .getElementById("productModal")
+        .classList.add("active");
+      }
+
+      function closeProduct() {
+    document.getElementById("productModal").classList.remove("active");
+      }
+
+      function changeDaisyColor(color) {
+
+    let image = "";
+
+    if (color === "red") {
+        image = "./images/IMG_20260724_153024.jpg";selectedColor = "Merah";
+    }
+
+    if (color === "yellow") {
+        image = "./images/IMG20260724114242.jpg";selectedColor = "yellow";
+    }
+
+    document.getElementById("detailImage").innerHTML =
+        '<img src="' + image + '" alt="Daisy Mini">';
+      }
+        
+      function tambah() {
+
+            quantity++;
+
+            document.getElementById("quantity").innerText = quantity;
+
+        }
+
+
+        function kurang() {
+
+            if (quantity > 1) {
+                quantity--;
+            }
+
+            document.getElementById("quantity").innerText = quantity;
+
+        }
+
+
+        function addToCart() {
+
+            cart.push({
+                name: selectedProduct,
+                price: selectedPrice,
+                quantity: quantity,
+                color: selectedColor
+            });
+
+            updateCartCount();
+
+            closeProduct();
+
+            alert(
+                selectedProduct +
+                " berhasil masuk ke keranjang ♡"
+            );
+
+        }
+
+
+        function updateCartCount() {
+
+            let total = 0;
+
+            cart.forEach(function(item) {
+                total += item.quantity;
+            });
+
+            document.getElementById("cartCount").innerText = total;
+
+        }
+
+
+        function openCart() {
+
+            showCart();
+
+            document
+                .getElementById("cartModal")
+                .classList.add("active");
+
+        }
+
+
+        function closeCart() {
+
+            document
+                .getElementById("cartModal")
+                .classList.remove("active");
+
+        }
+
+      function tambahCart(index) {
+
+    cart[index].quantity++;
+
+    showCart();
+      }
+
+      function kurangiCart(index) {
+
+    if (cart[index].quantity > 1) {
+        cart[index].quantity--;
+    }
+
+    showCart();
+      }
+
+      function hapusCart(index) {
+
+    cart.splice(index, 1);
+
+    updateCartCount();
+    showCart();
+      }
+
+      function searchProducts() {
+    let input = document.getElementById("searchInput").value.toLowerCase();
+    let products = document.querySelectorAll(".product");
+
+    products.forEach(function(product) {
+        let name = product.querySelector(".product-name").innerText.toLowerCase();
+        let category = product.dataset.category;
+
+        if (
+            name.includes(input) &&
+            (selectedCategory === "" || category === selectedCategory)
+        ) {
+            product.style.display = "";
+        } else {
+            product.style.display = "none";
+        }
+    });
+      }
+
+          
+      
+function filterCategory(category) {
+    document.querySelectorAll(".category").forEach(function(item) {
+    item.classList.remove("active");
+});
+
+event.currentTarget.classList.add("active");
+  selectedCategory = category;
+
+    let products = document.querySelectorAll(".product");
+    let input = document.getElementById("searchInput").value.toLowerCase();
+    let found = false;
+
+    products.forEach(function(product) {
+        let name = product.querySelector(".product-name").innerText.toLowerCase();
+
+        if (
+            product.dataset.category === selectedCategory &&
+            name.includes(input)
+        ) {
+            product.style.display = "";
+            found = true;
+        } else {
+            product.style.display = "none";
+        }
+    });
+
+    let emptyMessage = document.getElementById("emptyCategory");
+
+    if (!found) {
+        emptyMessage.style.display = "block";
+    } else {
+        emptyMessage.style.display = "none";
+    }
+
+    document.getElementById("products").scrollIntoView({
+        behavior: "smooth"
+    });
+}
+      function showAllProducts() {
+    selectedCategory = "";
+
+    let products = document.querySelectorAll(".product");
+
+    products.forEach(function(product) {
+        product.style.display = "";
+    });
+
+    document.getElementById("emptyCategory").style.display = "none";
+
+    document.getElementById("products").scrollIntoView({
+        behavior: "smooth"
+    });
+      }
+      
+function showCart() {
+
+    let container =
+        document.getElementById("cartItems");
+
+    if (cart.length === 0) {
+
+        container.innerHTML =
+            "<p>Keranjang masih kosong ♡</p>";
+
+        document.getElementById("cartTotal").innerText =
+            "Rp0";
+
+        return;
+    }
+
+    let html = "";
+    let total = 0;
+
+    cart.forEach(function(item) {
+
+        let subtotal =
+            item.price * item.quantity;
+
+        total += subtotal;
+
+        let colorText = "";
+
+        if (item.color) {
+            colorText =
+                "<br><small>Warna: " +
+                item.color +
+                "</small>";
+        }
+
+        html += `
+    <div class="cart-item">
+
+        <div>
+            <strong>${item.name}</strong>
+
+            ${colorText}
+
+            <br><br>
+
+            <button onclick="kurangiCart(${cart.indexOf(item)})">
+                −
+            </button>
+
+            <strong>
+                ${item.quantity}
+            </strong>
+
+            <button onclick="tambahCart(${cart.indexOf(item)})">
+                +
+            </button>
+
+            <button onclick="hapusCart(${cart.indexOf(item)})">
+                🗑️
+            </button>
+        </div>
+
+        <strong>
+            Rp${subtotal.toLocaleString("id-ID")}
+        </strong>
+
+    </div>
+          
+        `;
+
+    });
+
+    container.innerHTML = html;
+
+    document.getElementById("cartTotal").innerText =
+        "Rp" + total.toLocaleString("id-ID");
+}
+
+      function checkoutWhatsApp() {
+    if (cart.length === 0) {
+        alert("Keranjang masih kosong ♡");
+        return;
+    }
+
+    document.getElementById("cartModal").classList.remove("active");
+    document.getElementById("adminModal").classList.add("active");
+      }
+      
+function openAdminChat() {
+    document.getElementById("adminModal").classList.add("active");
+      }
+      
+function sendToWhatsApp(phone) {
+
+    let message = "Halo keandje.flowers! ♡\n\n";
+    message += "Saya mau pesan:\n";
+
+    cart.forEach(function(item) {
+        message += "• " + item.name;
+
+        if (item.color) {
+            message += " (" + item.color + ")";
+        }
+
+        message += " x" + item.quantity;
+        message += " = Rp" +
+            (item.price * item.quantity).toLocaleString("id-ID");
+        message += "\n";
+    });
+
+    let total = 0;
+
+    cart.forEach(function(item) {
+        total += item.price * item.quantity;
+    });
+
+    message += "\nTotal: Rp" +
+        total.toLocaleString("id-ID");
+
+    message += "\n\nTerima kasih ♡";
+
+    let url =
+        "https://wa.me/" +
+        phone +
+        "?text=" +
+        encodeURIComponent(message);
+
+    window.open(url, "_blank");
+
+    closeAdminModal();
+}
+      
+    </script>
+
+</body>
+</html>
